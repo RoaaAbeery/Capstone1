@@ -60,42 +60,53 @@ public class MerchantStockService {
         return false;
     }
 
- public boolean addstock(String productid ,String merchantid , int amount){
-        for (int i = 0; i < merchantStocks.size(); i++) {
-            if(merchantStocks.get(i).getProductid().equals(productid)){
-               if(merchantStocks.get(i).getMerchantid().equals(merchantid)) {
-            merchantStocks.get(i).setStock(merchantStocks.get(i).getStock() + amount);
-            return true;
-               }
+public int addstock(String productid ,String merchantid , int amount) {
+    for (int j = 0; j < productService.products.size(); j++) {
+        if (productService.products.get(j).getId().equals(productid)) {
+            for (int k = 0; k < merchantService.merchants.size(); k++) {
+                if (merchantService.merchants.get(k).getId().equals(merchantid)) {
+                    for (int i = 0; i < merchantStocks.size(); i++) {
+                    merchantStocks.get(i).setStock(merchantStocks.get(i).getStock() + amount);
+                }return 0;
             }
-        }
-        return false;
+        }return 1;//m
+    }
+}return 2;//p
     }
 
- public boolean buy(String userid,String productid,String merchantid) {
-     for (int i = 0; i < merchantStocks.size(); i++) {
-         if (merchantStocks.get(i).getProductid().equals(productid)) {
-             if (merchantStocks.get(i).getMerchantid().equals(merchantid)) {
-                 for (int j = 0; j < userService.users.size(); j++) {
-                     if (userService.users.get(j).getId().equals(userid)) {
-                         if(merchantStocks.get(i).getStock()>0){
-                             merchantStocks.get(i).setStock(merchantStocks.get(i).getStock()-1);
-                             if(userService.users.get(j).getBalance()<productService.products.get(i).getPrice()){
-                                 return false;
-                             }
-                          else  userService.users.get(j).setBalance(userService.users.get(j).getBalance()-productService.products.get(i).getPrice());
-                             return true;
-                         }
-                     }
+public int buy1(String userid,String productid,String merchantid) {
+    for (int i = 0; i < userService.users.size(); i++) {
+        if (userService.users.get(i).getId().equals(userid)) {
+            for (int j = 0; j < productService.products.size(); j++) {
+                if (productService.products.get(j).getId().equals(productid)) {
+                    for (int k = 0; k < merchantService.merchants.size(); k++) {
+                        if (merchantService.merchants.get(k).getId().equals(merchantid)) {
+                            for (int l = 0; l < merchantStocks.size(); l++) {
+                                if(merchantStocks.get(i).getStock()>0){
+                                    merchantStocks.get(i).setStock(merchantStocks.get(i).getStock()-1);
+                                    if(userService.users.get(i).getBalance()<productService.products.get(j).getPrice()){
+                                        return 0;
+                                        }// balan
+                                    else userService.users.get(j).setBalance(userService.users.get(j).getBalance()-productService.products.get(i).getPrice());
+                                    return 1;//good
+                        }
 
-                 }
-             }
 
-         }
+                    }return 2;//sid
 
-     }
- return false;
+                } return 3;//mid
+
+            }return 4;//pid
+
+        }
+
+    }
 }
 
+}return 5;//uid
+    }
+
+
 
 }
+
